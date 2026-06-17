@@ -28,9 +28,14 @@ export const TodoPage = () => {
           <Card size="small">
             <div className="flex items-center justify-between">
               <Checkbox>Sample task 1</Checkbox>
-              <Button danger size="small">
-                {t('todo.delete')}
-              </Button>
+              <div className="flex flex-col gap-1 sm:flex-row">
+                <Button size="small" className="w-24">
+                  {t('todo.edit')}
+                </Button>
+                <Button danger size="small" className="w-24">
+                  {t('todo.delete')}
+                </Button>
+              </div>
             </div>
           </Card>
         </div>

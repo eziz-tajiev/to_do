@@ -4,6 +4,8 @@
     "placeholder": "Add a new task...",
     "add": "Add",
     "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save",
     "empty": "No tasks yet. Add one above!"
   }
 }
