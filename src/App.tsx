@@ -1,8 +1,11 @@
+import { Routes, Route } from 'react-router-dom'
+import TodoPage from './pages/todo/ui'
+
 function App() {
   return (
-    <>
-      <h1 className="">Test</h1>
-    </>
+    <Routes>
+      <Route path="/" element={<TodoPage />} />
+    </Routes>
   )
 }
 
