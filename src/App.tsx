@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import TodoPage from './pages/todo/ui'
+import { TodoPage } from '@/pages/todo'
 
 function App() {
   return (
