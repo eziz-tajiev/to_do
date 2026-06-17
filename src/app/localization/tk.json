@@ -1,9 +1,22 @@
 {
+  "register": {
+    "title": "Hasap açmak",
+    "username": "Ulanyjy ady",
+    "email": "E-poçta",
+    "firstName": "Ady",
+    "lastName": "Familiýasy",
+    "password": "Açar söz",
+    "submit": "Hasap açmak",
+    "hasAccount": "Hasabyňyz barmy?",
+    "signIn": "Giriş"
+  },
   "login": {
     "title": "Giriş",
     "email": "E-poçta",
     "password": "Açar söz",
-    "submit": "Giriş"
+    "submit": "Giriş",
+    "noAccount": "Hasabyňyz ýokmy?",
+    "signUp": "Hasap açmak"
   },
   "todo": {
     "title": "Iş sanawı",

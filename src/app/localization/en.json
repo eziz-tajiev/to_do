@@ -1,9 +1,22 @@
 {
+  "register": {
+    "title": "Sign Up",
+    "username": "Username",
+    "email": "Email",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "password": "Password",
+    "submit": "Sign Up",
+    "hasAccount": "Already have an account?",
+    "signIn": "Sign in"
+  },
   "login": {
     "title": "Sign In",
     "email": "Email",
     "password": "Password",
-    "submit": "Sign In"
+    "submit": "Sign In",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up"
   },
   "todo": {
     "title": "Todo List",

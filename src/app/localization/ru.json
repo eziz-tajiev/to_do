@@ -1,9 +1,22 @@
 {
+  "register": {
+    "title": "Регистрация",
+    "username": "Имя пользователя",
+    "email": "Эл. почта",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "password": "Пароль",
+    "submit": "Зарегистрироваться",
+    "hasAccount": "Уже есть аккаунт?",
+    "signIn": "Войти"
+  },
   "login": {
     "title": "Войти",
     "email": "Эл. почта",
     "password": "Пароль",
-    "submit": "Войти"
+    "submit": "Войти",
+    "noAccount": "Нет аккаунта?",
+    "signUp": "Зарегистрироваться"
   },
   "todo": {
     "title": "Список задач",

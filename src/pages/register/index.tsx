@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { ThemeToggle } from '@/widgets/ThemeToggle'
 import { LanguageSwitcher } from '@/widgets/LanguageSwitcher'
 
-export const LoginPage = () => {
+export const RegisterPage = () => {
   const { t } = useTranslation()
 
   return (
@@ -15,17 +15,20 @@ export const LoginPage = () => {
       </div>
       <Card className="w-full max-w-sm">
         <h1 className="mb-6 text-center text-2xl font-bold text-gray-800 dark:text-gray-100">
-          {t('login.title')}
+          {t('register.title')}
         </h1>
         <div className="flex flex-col gap-3">
-          <Input size="large" placeholder={t('login.email')} />
-          <Input.Password size="large" placeholder={t('login.password')} />
+          <Input size="large" placeholder={t('register.username')} />
+          <Input size="large" placeholder={t('register.email')} />
+          <Input size="large" placeholder={t('register.firstName')} />
+          <Input size="large" placeholder={t('register.lastName')} />
+          <Input.Password size="large" placeholder={t('register.password')} />
           <Button type="primary" size="large" block>
-            {t('login.submit')}
+            {t('register.submit')}
           </Button>
           <div className="text-center text-sm">
-            {t('login.noAccount')}{' '}
-            <Link to="/register">{t('login.signUp')}</Link>
+            {t('register.hasAccount')}{' '}
+            <Link to="/login">{t('register.signIn')}</Link>
           </div>
         </div>
       </Card>
