@@ -19,8 +19,8 @@ i18n.use(initReactI18next).init({
       translation: en,
     },
   },
-  lng: (await LocalStorage.get('locale')) || 'tk',
-  fallbackLng: (await LocalStorage.get('locale')) || 'tk',
+  lng: (await LocalStorage.get('lang')) || 'tk',
+  fallbackLng: (await LocalStorage.get('lang')) || 'tk',
   interpolation: {
     escapeValue: false,
   },

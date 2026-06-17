@@ -1,0 +1,9 @@
+{
+  "todo": {
+    "title": "Iş sanawı",
+    "placeholder": "Täze iş goşuň...",
+    "add": "Goşmak",
+    "delete": "Pozmak",
+    "empty": "Heniz iş ýok. Ýokarda birini goşuň!"
+  }
+}

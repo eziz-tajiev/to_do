@@ -1,0 +1,9 @@
+{
+  "todo": {
+    "title": "Todo List",
+    "placeholder": "Add a new task...",
+    "add": "Add",
+    "delete": "Delete",
+    "empty": "No tasks yet. Add one above!"
+  }
+}

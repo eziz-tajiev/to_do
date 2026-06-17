@@ -1,4 +1,4 @@
-type Key = 'locale' | 'lang'
+type Key = 'lang'
 
 export const LocalStorage = {
   set: (key: Key, value: string) => {
