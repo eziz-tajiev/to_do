@@ -1,4 +1,10 @@
 {
+  "login": {
+    "title": "Giriş",
+    "email": "E-poçta",
+    "password": "Açar söz",
+    "submit": "Giriş"
+  },
   "todo": {
     "title": "Iş sanawı",
     "placeholder": "Täze iş goşuň...",
