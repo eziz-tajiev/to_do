@@ -17,9 +17,9 @@ export const TodoPage = () => {
           </div>
         </div>
 
-        <div className="mb-6 flex gap-2">
+        <div className="mb-6 flex flex-col gap-2 sm:flex-row">
           <Input placeholder={t('todo.placeholder')} size="large" />
-          <Button type="primary" size="large" className="w-24 shrink-0">
+          <Button type="primary" size="large" className="sm:w-24 sm:shrink-0">
             {t('todo.add')}
           </Button>
         </div>
