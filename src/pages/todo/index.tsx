@@ -7,15 +7,15 @@ export const TodoPage = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="min-h-screen px-4 py-8">
-      <div className="mx-auto w-full max-w-lg">
-        <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">{t('todo.title')}</h1>
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <LanguageSwitcher />
-          </div>
-        </div>
+    <div className="flex justify-center pt-20 px-4">
+      <div className="absolute right-4 top-4 flex items-center gap-2">
+        <ThemeToggle />
+        <LanguageSwitcher />
+      </div>
+      <Card className="w-full max-w-lg">
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+          {t('todo.title')}
+        </h1>
 
         <div className="mb-6 flex flex-col gap-2 sm:flex-row">
           <Input placeholder={t('todo.placeholder')} size="large" />
@@ -39,7 +39,7 @@ export const TodoPage = () => {
             </div>
           </Card>
         </div>
-      </div>
+      </Card>
     </div>
   )
 }
