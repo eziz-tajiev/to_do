@@ -1,18 +1,34 @@
-import { Button, Card, Checkbox, Input } from 'antd'
+import { Button, Card, Checkbox, Input, Spin } from 'antd'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { LanguageSwitcher } from '@/widgets/LanguageSwitcher'
 import { ThemeToggle } from '@/widgets/ThemeToggle'
 import { LocalStorage } from '@/shared/lib/LocalStorage'
+import {
+  useCreateTodoMutation,
+  useDeleteTodoMutation,
+  useGetTodosQuery,
+} from '@/features/todos/api'
 
 export const TodoPage = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const [title, setTitle] = useState('')
+  const [createTodo, { isLoading }] = useCreateTodoMutation()
+  const [deleteTodo, { isLoading: isDeleting, originalArgs: deletingId }] = useDeleteTodoMutation()
+  const { data, isFetching } = useGetTodosQuery(undefined)
 
   const handleLogout = () => {
     LocalStorage.delete('accessToken')
     LocalStorage.delete('refreshToken')
     navigate('/login')
+  }
+
+  const handleAdd = () => {
+    if (!title.trim()) return
+    createTodo({ title, description: '', completed: false })
+    setTitle('')
   }
 
   return (
@@ -30,26 +46,55 @@ export const TodoPage = () => {
         </h1>
 
         <div className="mb-6 flex flex-col gap-2 sm:flex-row">
-          <Input placeholder={t('todo.placeholder')} size="large" />
-          <Button type="primary" size="large" className="sm:w-24 sm:shrink-0">
+          <Input
+            placeholder={t('todo.placeholder')}
+            size="large"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            onPressEnter={handleAdd}
+          />
+          <Button
+            type="primary"
+            size="large"
+            className="sm:w-28 sm:shrink-0"
+            loading={isLoading}
+            onClick={handleAdd}
+          >
             {t('todo.add')}
           </Button>
         </div>
 
         <div className="flex flex-col gap-3">
-          <Card size="small">
-            <div className="flex items-center justify-between">
-              <Checkbox>Sample task 1</Checkbox>
-              <div className="flex flex-col gap-1 sm:flex-row">
-                <Button size="small" className="w-24">
-                  {t('todo.edit')}
-                </Button>
-                <Button danger size="small" className="w-24">
-                  {t('todo.delete')}
-                </Button>
-              </div>
+          {isFetching && (
+            <div className="flex justify-center py-4">
+              <Spin />
             </div>
-          </Card>
+          )}
+          {!isFetching &&
+            data?.results.map((todo) => (
+              <Card size="small" key={todo.id}>
+                <div className="flex items-center justify-between">
+                  <Checkbox checked={todo.completed}>{todo.title}</Checkbox>
+                  <div className="flex flex-col gap-1 sm:flex-row">
+                    <Button size="small" className="w-24">
+                      {t('todo.edit')}
+                    </Button>
+                    <Button
+                      danger
+                      size="small"
+                      className="w-24"
+                      loading={isDeleting && deletingId === todo.id}
+                      onClick={() => deleteTodo(todo.id)}
+                    >
+                      {t('todo.delete')}
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          {!isFetching && data?.results.length === 0 && (
+            <p className="text-center text-gray-400">{t('todo.empty')}</p>
+          )}
         </div>
       </Card>
     </div>
