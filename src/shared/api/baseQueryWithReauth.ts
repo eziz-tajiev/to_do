@@ -1,11 +1,6 @@
-import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { LocalStorage } from '@/shared/lib/LocalStorage'
 import { baseQuery } from './baseQuery'
-
-const refreshQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_BACKEND_URL,
-})
 
 export const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,
@@ -19,9 +14,9 @@ export const baseQueryWithReauth: BaseQueryFn<
     const refreshToken = LocalStorage.get('refreshToken')
 
     if (refreshToken) {
-      const refreshResult = await refreshQuery(
+      const refreshResult = await baseQuery(
         {
-          url: '/api/token/refresh/',
+          url: '/token/refresh/',
           method: 'POST',
           body: { refresh: refreshToken },
         },
@@ -30,8 +25,9 @@ export const baseQueryWithReauth: BaseQueryFn<
       )
 
       if (refreshResult.data) {
-        const { access } = refreshResult.data as { access: string }
+        const { access, refresh } = refreshResult.data as { access: string; refresh?: string }
         LocalStorage.set('accessToken', access)
+        if (refresh) LocalStorage.set('refreshToken', refresh)
         result = await baseQuery(args, api, extraOptions)
       } else {
         LocalStorage.delete('accessToken')
