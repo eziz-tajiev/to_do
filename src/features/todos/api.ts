@@ -45,14 +45,42 @@ export const todosApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Todos'] as const,
     }),
+    updateTodo: builder.mutation<Todo, { id: number; title?: string; completed?: boolean }>({
+      query: ({ id, ...body }) => ({
+        url: `/todos/${id}/`,
+        method: 'PATCH',
+        body,
+      }),
+      onQueryStarted: async ({ id, ...patch }, { dispatch, queryFulfilled }) => {
+        const patchResult = dispatch(
+          todosApi.util.updateQueryData('getTodos', undefined, (draft) => {
+            const todo = draft.results.find((t) => t.id === id)
+            if (todo) Object.assign(todo, patch)
+          }),
+        )
+        queryFulfilled.catch(patchResult.undo)
+      },
+    }),
     deleteTodo: builder.mutation<void, number>({
       query: (id) => ({
         url: `/todos/${id}/`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Todos'] as const,
+      onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
+        const patchResult = dispatch(
+          todosApi.util.updateQueryData('getTodos', undefined, (draft) => {
+            draft.results = draft.results.filter((t) => t.id !== id)
+          }),
+        )
+        queryFulfilled.catch(patchResult.undo)
+      },
     }),
   }),
 })
 
-export const { useGetTodosQuery, useCreateTodoMutation, useDeleteTodoMutation } = todosApi
+export const {
+  useGetTodosQuery,
+  useCreateTodoMutation,
+  useUpdateTodoMutation,
+  useDeleteTodoMutation,
+} = todosApi

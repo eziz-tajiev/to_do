@@ -1,5 +1,6 @@
 import { Button, Card, Checkbox, Input, Spin } from 'antd'
 import { useState } from 'react'
+import type { Todo } from '@/features/todos/api'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { LanguageSwitcher } from '@/widgets/LanguageSwitcher'
@@ -9,13 +10,16 @@ import {
   useCreateTodoMutation,
   useDeleteTodoMutation,
   useGetTodosQuery,
+  useUpdateTodoMutation,
 } from '@/features/todos/api'
 
 export const TodoPage = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [title, setTitle] = useState('')
+  const [editingTodo, setEditingTodo] = useState<Todo | null>(null)
   const [createTodo, { isLoading }] = useCreateTodoMutation()
+  const [updateTodo] = useUpdateTodoMutation()
   const [deleteTodo, { isLoading: isDeleting, originalArgs: deletingId }] = useDeleteTodoMutation()
   const { data, isFetching } = useGetTodosQuery(undefined)
 
@@ -73,12 +77,46 @@ export const TodoPage = () => {
           {!isFetching &&
             data?.results.map((todo) => (
               <Card size="small" key={todo.id}>
-                <div className="flex items-center justify-between">
-                  <Checkbox checked={todo.completed}>{todo.title}</Checkbox>
-                  <div className="flex flex-col gap-1 sm:flex-row">
-                    <Button size="small" className="w-24">
-                      {t('todo.edit')}
-                    </Button>
+                <div className="flex items-center justify-between gap-2">
+                  {editingTodo?.id === todo.id ? (
+                    <Input
+                      size="small"
+                      value={editingTodo.title}
+                      onChange={(e) => setEditingTodo({ ...editingTodo, title: e.target.value })}
+                      onPressEnter={() => {
+                        updateTodo({ id: todo.id, title: editingTodo.title })
+                        setEditingTodo(null)
+                      }}
+                      autoFocus
+                    />
+                  ) : (
+                    <Checkbox
+                      checked={todo.completed}
+                      onChange={(e) => updateTodo({ id: todo.id, completed: e.target.checked })}
+                    >
+                      <span className={todo.completed ? 'line-through text-gray-400' : ''}>
+                        {todo.title}
+                      </span>
+                    </Checkbox>
+                  )}
+                  <div className="flex flex-col gap-1 sm:flex-row shrink-0">
+                    {editingTodo?.id === todo.id ? (
+                      <Button
+                        size="small"
+                        className="w-24"
+                        type="primary"
+                        onClick={() => {
+                          updateTodo({ id: todo.id, title: editingTodo.title })
+                          setEditingTodo(null)
+                        }}
+                      >
+                        {t('todo.save')}
+                      </Button>
+                    ) : (
+                      <Button size="small" className="w-24" onClick={() => setEditingTodo(todo)}>
+                        {t('todo.edit')}
+                      </Button>
+                    )}
                     <Button
                       danger
                       size="small"
