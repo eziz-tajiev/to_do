@@ -36,6 +36,7 @@
     "delete": "Delete",
     "edit": "Edit",
     "save": "Save",
-    "empty": "No tasks yet. Add one above!"
+    "empty": "No tasks yet. Add one above!",
+    "logout": "Logout"
   }
 }

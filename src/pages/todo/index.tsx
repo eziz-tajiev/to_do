@@ -1,16 +1,28 @@
 import { Button, Card, Checkbox, Input } from 'antd'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { LanguageSwitcher } from '@/widgets/LanguageSwitcher'
 import { ThemeToggle } from '@/widgets/ThemeToggle'
+import { LocalStorage } from '@/shared/lib/LocalStorage'
 
 export const TodoPage = () => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    LocalStorage.delete('accessToken')
+    LocalStorage.delete('refreshToken')
+    navigate('/login')
+  }
 
   return (
     <div className="flex justify-center pt-20 px-4">
       <div className="absolute right-4 top-4 flex items-center gap-2">
         <ThemeToggle />
         <LanguageSwitcher />
+        <Button danger onClick={handleLogout}>
+          {t('todo.logout')}
+        </Button>
       </div>
       <Card className="w-full max-w-lg">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">

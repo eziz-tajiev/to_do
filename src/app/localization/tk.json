@@ -36,6 +36,7 @@
     "delete": "Pozmak",
     "edit": "Üýtgetmek",
     "save": "Saklamak",
-    "empty": "Heniz iş ýok. Ýokarda birini goşuň!"
+    "empty": "Heniz iş ýok. Ýokarda birini goşuň!",
+    "logout": "Çykmak"
   }
 }
