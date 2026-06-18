@@ -1,4 +1,4 @@
-type Key = 'lang' | 'theme'
+type Key = 'lang' | 'theme' | 'accessToken' | 'refreshToken'
 
 export const LocalStorage = {
   set: (key: Key, value: string) => {
