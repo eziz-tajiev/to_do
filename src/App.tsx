@@ -5,6 +5,7 @@ import type { RootState } from './shared/store'
 import { TodoPage } from '@/pages/todo'
 import { LoginPage } from '@/pages/login'
 import { RegisterPage } from '@/pages/register'
+import { ProtectedRoute, GuestRoute } from '@/shared/ui/ProtectedRoute'
 
 function App() {
   const isDark = useSelector((state: RootState) => state.theme.isDark)
@@ -12,9 +13,13 @@ function App() {
   return (
     <ConfigProvider theme={{ algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm }}>
       <Routes>
-        <Route path="/" element={<TodoPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<TodoPage />} />
+        </Route>
+        <Route element={<GuestRoute />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Route>
       </Routes>
     </ConfigProvider>
   )
