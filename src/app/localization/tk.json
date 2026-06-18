@@ -1,4 +1,12 @@
 {
+  "backendErrors": {
+    "usernameExists": "Bu ulanyjy ady eýýäm bar."
+  },
+  "validation": {
+    "required": "Bu meýdan hökmany",
+    "email": "Dogry e-poçta giriziň",
+    "minLength": "Iň az {{count}} simwol"
+  },
   "register": {
     "title": "Hasap açmak",
     "username": "Ulanyjy ady",
@@ -7,6 +15,7 @@
     "lastName": "Familiýasy",
     "password": "Açar söz",
     "submit": "Hasap açmak",
+    "error": "Hasap açmak başartmady. Täzeden synanyşyň.",
     "hasAccount": "Hasabyňyz barmy?",
     "signIn": "Giriş"
   },
@@ -14,7 +23,9 @@
     "title": "Giriş",
     "email": "E-poçta",
     "password": "Açar söz",
+    "username": "Ulanyjy ady",
     "submit": "Giriş",
+    "error": "Ulanyjy ady ýa-da açar söz nädogry",
     "noAccount": "Hasabyňyz ýokmy?",
     "signUp": "Hasap açmak"
   },

@@ -1,4 +1,12 @@
 {
+  "backendErrors": {
+    "usernameExists": "A user with that username already exists."
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Enter a valid email",
+    "minLength": "Minimum {{count}} characters"
+  },
   "register": {
     "title": "Sign Up",
     "username": "Username",
@@ -7,6 +15,7 @@
     "lastName": "Last name",
     "password": "Password",
     "submit": "Sign Up",
+    "error": "Registration failed. Please try again.",
     "hasAccount": "Already have an account?",
     "signIn": "Sign in"
   },
@@ -14,7 +23,9 @@
     "title": "Sign In",
     "email": "Email",
     "password": "Password",
+    "username": "Username",
     "submit": "Sign In",
+    "error": "Invalid username or password",
     "noAccount": "Don't have an account?",
     "signUp": "Sign up"
   },
