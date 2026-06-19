@@ -1,4 +1,4 @@
-import { Button, Card, Checkbox, Input, Spin } from 'antd'
+import { Button, Card, Checkbox, Input, Pagination, Spin } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { useDebounce } from 'use-debounce'
@@ -21,11 +21,17 @@ export const TodoPage = () => {
   const [title, setTitle] = useState('')
   const [search, setSearch] = useState('')
   const [debouncedSearch] = useDebounce(search, 500)
+  const [page, setPage] = useState(1)
+  const pageSize = 10
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null)
   const [createTodo, { isLoading }] = useCreateTodoMutation()
   const [updateTodo] = useUpdateTodoMutation()
   const [deleteTodo, { isLoading: isDeleting, originalArgs: deletingId }] = useDeleteTodoMutation()
-  const { data, isFetching } = useGetTodosQuery({ search: debouncedSearch })
+  const { data, isFetching } = useGetTodosQuery({
+    search: debouncedSearch,
+    limit: pageSize,
+    offset: (page - 1) * pageSize,
+  })
 
   const handleLogout = () => {
     LocalStorage.delete('accessToken')
@@ -40,7 +46,7 @@ export const TodoPage = () => {
   }
 
   return (
-    <div className="flex justify-center pt-20 px-4">
+    <div className="flex justify-center py-20 px-4">
       <div className="absolute right-4 top-4 flex items-center gap-2">
         <ThemeToggle />
         <LanguageSwitcher />
@@ -59,7 +65,10 @@ export const TodoPage = () => {
             size="large"
             prefix={<SearchOutlined />}
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value)
+              setPage(1)
+            }}
             allowClear
           />
         </div>
@@ -149,6 +158,17 @@ export const TodoPage = () => {
             <p className="text-center text-gray-400">
               {search ? t('todo.notFound') : t('todo.empty')}
             </p>
+          )}
+          {!isFetching && data && data.count > pageSize && (
+            <div className="flex justify-center pt-2">
+              <Pagination
+                current={page}
+                pageSize={pageSize}
+                total={data.count}
+                onChange={setPage}
+                showSizeChanger={false}
+              />
+            </div>
           )}
         </div>
       </Card>
