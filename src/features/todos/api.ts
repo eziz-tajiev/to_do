@@ -51,29 +51,14 @@ export const todosApi = api.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      onQueryStarted: async ({ id, ...patch }, { dispatch, queryFulfilled }) => {
-        const patchResult = dispatch(
-          todosApi.util.updateQueryData('getTodos', undefined, (draft) => {
-            const todo = draft.results.find((t) => t.id === id)
-            if (todo) Object.assign(todo, patch)
-          }),
-        )
-        queryFulfilled.catch(patchResult.undo)
-      },
+      invalidatesTags: ['Todos'] as const,
     }),
     deleteTodo: builder.mutation<void, number>({
       query: (id) => ({
         url: `/todos/${id}/`,
         method: 'DELETE',
       }),
-      onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
-        const patchResult = dispatch(
-          todosApi.util.updateQueryData('getTodos', undefined, (draft) => {
-            draft.results = draft.results.filter((t) => t.id !== id)
-          }),
-        )
-        queryFulfilled.catch(patchResult.undo)
-      },
+      invalidatesTags: ['Todos'] as const,
     }),
   }),
 })

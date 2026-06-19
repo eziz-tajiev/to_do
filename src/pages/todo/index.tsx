@@ -1,5 +1,7 @@
 import { Button, Card, Checkbox, Input, Spin } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
 import { useState } from 'react'
+import { useDebounce } from 'use-debounce'
 import type { Todo } from '@/features/todos/api'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -17,11 +19,13 @@ export const TodoPage = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [title, setTitle] = useState('')
+  const [search, setSearch] = useState('')
+  const [debouncedSearch] = useDebounce(search, 500)
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null)
   const [createTodo, { isLoading }] = useCreateTodoMutation()
   const [updateTodo] = useUpdateTodoMutation()
   const [deleteTodo, { isLoading: isDeleting, originalArgs: deletingId }] = useDeleteTodoMutation()
-  const { data, isFetching } = useGetTodosQuery(undefined)
+  const { data, isFetching } = useGetTodosQuery({ search: debouncedSearch })
 
   const handleLogout = () => {
     LocalStorage.delete('accessToken')
@@ -48,6 +52,17 @@ export const TodoPage = () => {
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">
           {t('todo.title')}
         </h1>
+
+        <div className="mb-4">
+          <Input
+            placeholder={t('todo.search')}
+            size="large"
+            prefix={<SearchOutlined />}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            allowClear
+          />
+        </div>
 
         <div className="mb-6 flex flex-col gap-2 sm:flex-row">
           <Input
@@ -131,7 +146,9 @@ export const TodoPage = () => {
               </Card>
             ))}
           {!isFetching && data?.results.length === 0 && (
-            <p className="text-center text-gray-400">{t('todo.empty')}</p>
+            <p className="text-center text-gray-400">
+              {search ? t('todo.notFound') : t('todo.empty')}
+            </p>
           )}
         </div>
       </Card>

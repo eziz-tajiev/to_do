@@ -37,6 +37,8 @@
     "edit": "Edit",
     "save": "Save",
     "empty": "No tasks yet. Add one above!",
-    "logout": "Logout"
+    "logout": "Logout",
+    "search": "Search tasks...",
+    "notFound": "No tasks found for your search."
   }
 }

@@ -37,6 +37,8 @@
     "edit": "Üýtgetmek",
     "save": "Saklamak",
     "empty": "Heniz iş ýok. Ýokarda birini goşuň!",
-    "logout": "Çykmak"
+    "logout": "Çykmak",
+    "search": "Iş gözlemek...",
+    "notFound": "Gözleg boýunça iş tapylmady."
   }
 }
