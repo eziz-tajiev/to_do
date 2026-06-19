@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom'
 import { LanguageSwitcher } from '@/widgets/LanguageSwitcher'
 import { ThemeToggle } from '@/widgets/ThemeToggle'
 import { LocalStorage } from '@/shared/lib/LocalStorage'
+import { useDispatch } from 'react-redux'
+import { api } from '@/shared/api'
 import {
   useCreateTodoMutation,
   useDeleteTodoMutation,
@@ -18,6 +20,7 @@ import {
 export const TodoPage = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [title, setTitle] = useState('')
   const [search, setSearch] = useState('')
   const [debouncedSearch] = useDebounce(search, 500)
@@ -36,6 +39,7 @@ export const TodoPage = () => {
   const handleLogout = () => {
     LocalStorage.delete('accessToken')
     LocalStorage.delete('refreshToken')
+    dispatch(api.util.resetApiState())
     navigate('/login')
   }
 
